@@ -12,6 +12,7 @@ function App() {
         apiProps.getInfoUser().then((data) => {
             setCurrentUser(data)
         })
+        .catch(error => apiProps.errorHandler(error));
     }, []);
 
     const [cards, setCards] = React.useState([]);
@@ -20,14 +21,15 @@ function App() {
             console.log(cardList)
           setCards(cardList);
         })
+        .catch(error => apiProps.errorHandler(error));
     },[])
 
-    const [selectedCard, setSelectedCard] = React.useState([]);
+    const [selectedCard, setSelectedCard] = React.useState({});
 
     function handleCardClick(card) {
         setSelectedCard(card);
     }
-
+    console.log(selectedCard)
     const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
     const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
     const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
@@ -51,12 +53,12 @@ function App() {
     }
     return (
         <div className="App">
-            <body className="page">
+            <div className="page">
                 <Header />
                 <Main onEditProfile={handleEditProfileClick} 
                     onAddPlace={handleAddPlaceClick} 
                     onEditAvatar={handleEditAvatarClick} 
-                    User={currentUser}
+                    user={currentUser}
                     cards={cards}
                     onCardClick={handleCardClick}/>
                 <Footer />
@@ -107,7 +109,7 @@ function App() {
                     onClose={closeAllPopups} />
                 <ImagePopup card={selectedCard}
                     onClose={closeAllPopups}/>
-            </body>
+            </div>
         </div>
     );
 }

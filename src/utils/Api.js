@@ -143,6 +143,10 @@ export class Api {
             return Promise.reject(`Ошибка: ${res.status}`);
         })
     }
+
+    errorHandler(error) {
+        console.log(error);
+    }
 }
 
 const apiProps = new Api({
