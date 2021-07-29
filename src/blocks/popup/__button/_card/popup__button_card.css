@@ -1,0 +1,7 @@
+@media (max-width: 670px) {
+  .popup__button_card {
+    width: 200px;
+    min-height: 40px;
+    margin-bottom: 30px;
+  }
+}

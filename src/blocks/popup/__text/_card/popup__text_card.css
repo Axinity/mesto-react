@@ -1,0 +1,5 @@
+@media (max-width: 670px) {
+  .popup__text_card {
+    width: 200px;
+  }
+}

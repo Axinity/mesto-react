@@ -1,0 +1,6 @@
+@media (max-width: 670px) {
+  .popup__close-button_pos-right {
+    right: -33px;
+    top: -33px;
+  }
+}

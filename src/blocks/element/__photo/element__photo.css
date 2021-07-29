@@ -1,0 +1,10 @@
+.element__photo {
+  display: block;
+  object-fit: cover;
+
+  height: calc(100% - 79px);
+}
+
+.element__photo:hover {
+  cursor: pointer;
+}
