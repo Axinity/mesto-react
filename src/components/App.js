@@ -21,7 +21,6 @@ function App() {
     const [cards, setCards] = React.useState([]);
     React.useEffect(() => {
         apiProps.getInitialCards().then(cardList => {
-            console.log(cardList)
           setCards(cardList);
         })
         .catch(error => apiProps.errorHandler(error));
@@ -42,8 +41,7 @@ function App() {
 
     function handleCardDelete(card) {
         apiProps.apiDeleteCard(card._id).then(() => {
-          const newCards = cards.filter((c) => c._id !== card._id);
-          setCards(newCards);
+        setCards(cards => cards.filter((state) => state._id !== card._id))
         })
         .catch(error => apiProps.errorHandler(error));
       }

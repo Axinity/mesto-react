@@ -3,12 +3,8 @@ import Card from './Card';
 import React from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
-
-
 function Main({ onEditProfile, onAddPlace, onEditAvatar, cards, onCardClick, onCardLike, onCardDelete}) {
     const currentUser = React.useContext(CurrentUserContext);
-
-
 
     return (
         <main className="main">
@@ -26,7 +22,6 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, cards, onCardClick, onC
                 </div>
                 <button type="button" aria-label="New post" className="profile__add-button" onClick={onAddPlace}></button>
             </section>
-
             <section>
                 <ul className="elements">
                     {cards.map((card) => <Card  card={card} key={card._id} onCardClick={onCardClick} onCardLike={onCardLike} onCardDelete={onCardDelete}/>)}

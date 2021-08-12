@@ -1,14 +1,12 @@
 import React from 'react';
 import PopupWithForm from './PopupWithForm';
 
-
 export default function AddPlacePopup({isOpen, onClose, onAddPlace}) {
     const name = React.useRef();
     const link = React.useRef();
 
     function handleSubmit(e) {
         e.preventDefault();
-    
     
         // Передаём значения управляемых компонентов во внешний обработчик
         onAddPlace({
