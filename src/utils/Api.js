@@ -35,10 +35,10 @@ export class Api {
         })
     }
     
-    sendUserInfo({ name, about }) {
+    sendUserInfo( name, about ) {
         this._name = name
         this._about = about
-        fetch(`${this._address}users/me`, {
+        return fetch(`${this._address}users/me`, {
             method: 'PATCH',
             headers: {
                 authorization: this._token,
