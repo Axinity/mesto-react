@@ -57,18 +57,16 @@ export class Api {
         })
     }
 
-    sendNewCard() {
-        this._addNewItemName = document.querySelector('.popup__text_name-card')
-        this._addNewItemLink = document.querySelector('.popup__text_link-card')
-        fetch(`${this._address}cards`, {
+    sendNewCard(name, link) {
+        return fetch(`${this._address}cards`, {
             method: 'POST',
             headers: {
                 authorization: this._token,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                name: this._addNewItemName.value,
-                link: this._addNewItemLink.value
+                name: name,
+                link: link
             })
         })
         .then((res) => {
@@ -133,7 +131,7 @@ export class Api {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                avatar: item.avatar
+                avatar: item
             })
         })
         .then((res) => {

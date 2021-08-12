@@ -2,11 +2,12 @@ import React from 'react';
 import Header from './Header';
 import Main from './Main'
 import Footer from './Footer'
-import PopupWithForm from './PopupWithForm';
 import apiProps from '../utils/Api';
 import ImagePopup from './ImagePopup';
 import {CurrentUserContext} from '../contexts/CurrentUserContext';
 import EditProfilePopup from './EditProfilePopup';
+import EditAvatarPopup from './EditAvatarPopup';
+import AddPlacePopup from './AddPlacePopup';
 
 function App() {
     const [currentUser, setCurrentUser] = React.useState({});
@@ -85,6 +86,22 @@ function App() {
         })
         .catch(error => apiProps.errorHandler(error));
       }
+
+    function handleUpdateAvatar({avatar}) {
+        apiProps.avatarUpdate(avatar).then((updatedUser) => {
+          setCurrentUser(updatedUser);
+          setIsEditAvatarPopupOpen(false);
+        })
+        .catch(error => apiProps.errorHandler(error));
+    }
+    
+    function handleAddPlaceSubmit({name, link}) {
+        apiProps.sendNewCard(name, link).then((newCard) => {
+            setCards([newCard, ...cards]);
+            setIsAddPlacePopupOpen(false);
+          })
+          .catch(error => apiProps.errorHandler(error));
+    }
     
     return (
         <CurrentUserContext.Provider value={currentUser}>
@@ -100,42 +117,10 @@ function App() {
                         onCardLike={handleCardLike}
                         onCardDelete={handleCardDelete}/>
                     <Footer />
-                    <EditProfilePopup 
-                        isOpen={isEditProfilePopupOpen} 
-                        onClose={closeAllPopups}
-                        onUpdateUser={handleUpdateUser}
-                    /> 
-                    <PopupWithForm
-                        name='card'
-                        title='Новое место'
-                        children={
-                            <>
-                            <input name="popup_name-card" type="text" className="popup__text popup__text_card popup__text_name-card"
-                                id='popup-name-card' placeholder="Название" minLength="2" maxLength="30" required/>
-                            <span id="popup-name-card-error" className="popup__error"></span>
-                            <input name="popup_link-card" type="url" className="popup__text popup__text_card popup__text_link-card"
-                                id='popup-link-card' placeholder="Ссылка на картинку" required/>
-                            <span id="popup-link-card-error" className="popup__error"></span>
-                            <button name="card-save-button" type="submit" className="popup__button popup__button_card">Создать</button>
-                            </>
-                        }
-                        isOpen={isAddPlacePopupOpen}
-                        onClose={closeAllPopups} />
-                    <PopupWithForm
-                        name='avatar' 
-                        title='Обновить аватар' 
-                        children={
-                            <>
-                                <input type='url' id='popup-link-avatar' className="popup__text popup__text_link-avatar" placeholder="Ссылка на картинку" required/>
-                                <span id="popup-link-avatar-error" className="popup__error"></span>
-                                <button type="submit" className="popup__button popup__button_avatar">Сохранить</button>
-                                <button type="button" aria-label="Close" className="popup__close-button "></button>
-                            </>
-                        } 
-                        isOpen={isEditAvatarPopupOpen}
-                        onClose={closeAllPopups} />
-                    <ImagePopup card={selectedCard}
-                        onClose={closeAllPopups}/>
+                    <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser}/> 
+                    <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit}/>
+                    {currentUser && <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar}/>}
+                    <ImagePopup card={selectedCard} onClose={closeAllPopups}/>
                 </div>
             </div>
         </CurrentUserContext.Provider>
